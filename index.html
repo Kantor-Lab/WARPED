@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="WARPED: Wrist-Aligned Rendering for Robot Policy Learning from Egocentric Human Demonstrations."
+    >
+    <meta name="author" content="Harry Freeman, Chung Hee Kim, Jenny Wang, George Kantor">
+
+    <meta property="og:type" content="website">
+    <meta
+      property="og:title"
+      content="WARPED: Wrist-Aligned Rendering for Robot Policy Learning from Egocentric Human Demonstrations"
+    >
+    <meta property="og:description" content="Carnegie Mellon University · CoRL 2026">
+
+    <title>WARPED: Wrist-Aligned Rendering for Robot Policy Learning from Egocentric Human Demonstrations</title>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/site.css">
+    <script src="static/js/gallery.js" defer></script>
+  </head>
+
+  <body>
+    <section class="publication-hero">
+      <div class="container">
+        <h1 class="publication-title">
+          WARPED: Wrist-Aligned Rendering for Robot Policy Learning from Egocentric Human Demonstrations
+        </h1>
+
+        <div class="publication-authors" aria-label="Authors">
+          <span class="author-block">
+            <a href="https://harrynvfreeman.com/">Harry Freeman</a>,
+          </span>
+          <span class="author-block">
+            <a href="https://chjohnkim.github.io/">Chung Hee Kim</a>,
+          </span>
+          <span class="author-block">
+            <a href="https://jwang078.github.io/">Jenny Wang</a>,
+          </span>
+          <span class="author-block">
+            <a href="https://www.ri.cmu.edu/ri-faculty/george-a-kantor/">George Kantor</a>
+          </span>
+        </div>
+
+        <div class="publication-affiliation">Carnegie Mellon University</div>
+        <div class="publication-venue">CoRL 2026</div>
+
+        <div class="publication-links" aria-label="Publication links">
+          <a class="publication-link" href="">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 2.75h8l4 4v14.5H6z"></path>
+              <path d="M14 2.75v4h4M8.75 11h6.5M8.75 14h6.5M8.75 17h4"></path>
+            </svg>
+            <span>Paper</span>
+          </a>
+
+          <a class="publication-link" href="">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+              <path d="m10 9 5 3-5 3z"></path>
+            </svg>
+            <span>Video</span>
+          </a>
+
+          <span class="publication-link publication-link--disabled" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 5.5l-3 13"></path>
+            </svg>
+            <span>Code (coming soon)</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="teaser">
+      <div class="container">
+        <figure>
+          <img
+            src="static/images/warped-teaser.webp"
+            width="1629"
+            height="1002"
+            alt="WARPED transforms egocentric human demonstrations into wrist-camera observations and robot trajectories for policy learning."
+          >
+          <figcaption>
+            WARPED transforms egocentric human demonstrations into wrist-camera observations and robot trajectories for training robot policies.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="abstract">
+      <div class="container">
+        <h2>Abstract</h2>
+        <p>
+          Recent advancements in learning from human demonstration have shown promising results in 
+          addressing the scalability and high cost of data collection required to 
+          train robust visuomotor policies. However, existing approaches are often 
+          constrained by a reliance on multiview camera setups, depth sensors, 
+          or custom hardware, and are typically limited to policy execution 
+          from third-person or egocentric cameras. In this paper, we present WARPED, 
+          a framework designed to synthesize realistic wrist-view observations 
+          and actions from human demonstration videos to facilitate the training of 
+          visuomotor policies using only monocular RGB data. With data collected 
+          from an egocentric RGB camera, our system leverages vision foundation 
+          models to initialize the interactive scene. A hand-object interaction 
+          pipeline is then employed to track the hand and manipulated object and 
+          retarget the trajectories to a robotic end-effector. Lastly, 
+          photorealistic wrist-view observations are synthesized via Gaussian Splatting 
+          to directly train a robotic policy. We demonstrate that WARPED 
+          achieves success rates comparable to teleoperation on four of 
+          five rigid-object tabletop tasks and one articulated-object task, 
+          while requiring 5-8x less data collection time.
+        </p>
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="container">
+        <h2>Method</h2>
+        <p class="method-summary">
+          WARPED recovers hand–object motion from an egocentric RGB demonstration, retargets it to the robot end effector, and renders the recovered trajectory from the robot’s wrist camera using Gaussian Splats. These observation–action pairs train a diffusion policy without collecting task-specific robot demonstrations.
+        </p>
+
+        <figure>
+          <img
+            src="static/images/warped-pipeline.jpg"
+            width="1863"
+            height="930"
+            loading="lazy"
+            alt="Overview of the WARPED pipeline from scene capture and human demonstration through scene initialization, hand-object optimization, retargeting, wrist-view rendering, policy training, and robot deployment."
+          >
+        </figure>
+      </div>
+    </section>
+
+    <section class="examples" id="examples">
+      <div class="container">
+        <h2>Human Demonstrations to Robot Renders</h2>
+
+        <div class="task-control">
+          <label for="example-task">Task:</label>
+          <select id="example-task" name="example-task">
+            <option value="rotate-box">Rotate Box</option>
+            <option value="pour-mug">Pour Mug</option>
+            <option value="bottle-from-rack">Bottle from Rack</option>
+            <option value="wipe-brush">Wipe Brush</option>
+            <option value="can-on-plate">Can on Plate</option>
+            <option value="open-microwave">Open Microwave</option>
+          </select>
+        </div>
+
+        <div class="comparison-grid">
+          <div class="media-example">
+            <h3>Human Demonstration</h3>
+            <video id="human-demo-video" controls playsinline>
+              <source src="static/videos/rotate-box/human-demo.webm" type="video/webm">
+              <source src="static/videos/rotate-box/human-demo.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="media-example">
+            <h3>WARPED Render</h3>
+            <video id="robot-render-video" controls playsinline>
+              <source src="static/videos/rotate-box/robot-render.webm" type="video/webm">
+              <source src="static/videos/rotate-box/robot-render.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rollouts" id="rollouts">
+      <div class="container">
+        <h2>Robot Rollouts</h2>
+
+        <div class="task-control">
+          <label for="rollout-task">Task:</label>
+          <select id="rollout-task" name="rollout-task">
+            <option value="rotate-box">Rotate Box</option>
+            <option value="pour-mug">Pour Mug</option>
+            <option value="bottle-from-rack">Bottle from Rack</option>
+            <option value="wipe-brush">Wipe Brush</option>
+            <option value="can-on-plate">Can on Plate</option>
+            <option value="open-microwave">Open Microwave</option>
+          </select>
+        </div>
+
+        <div class="rollout-video">
+          <div class="rollout-view-labels">
+            <span>Exocentric View</span>
+            <span>Wrist View</span>
+          </div>
+          <video id="robot-rollout-video" controls playsinline>
+            <source src="static/videos/rollouts/rotate-box.webm" type="video/webm">
+            <source src="static/videos/rollouts/rotate-box.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="results" id="results">
+      <div class="container">
+        <h2>Main Results</h2>
+        <p>
+          WARPED achieves success rates comparable to teleoperation while requiring substantially less data collection time.
+        </p>
+
+        <div class="results-table-wrapper">
+          <table class="results-table">
+            <caption>Success rates over 20 evaluation trials.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Method</th>
+                <th scope="col">Rotate Box</th>
+                <th scope="col">Pour Mug</th>
+                <th scope="col">Bottle from Rack</th>
+                <th scope="col">Wipe Brush</th>
+                <th scope="col">Can on Plate</th>
+                <th scope="col">Open Microwave</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Teleoperation</th>
+                <td>16/20</td>
+                <td><strong>19/20</strong></td>
+                <td>16/20</td>
+                <td><strong>15/20</strong></td>
+                <td><strong>19/20</strong></td>
+                <td><strong>18/20</strong></td>
+              </tr>
+              <tr>
+                <th scope="row">Alter (Heng et al.)</th>
+                <td>7/20</td>
+                <td>3/20</td>
+                <td>0/20</td>
+                <td>0/20</td>
+                <td>8/20</td>
+                <td>0/20</td>
+              </tr>
+              <tr class="warped-result">
+                <th scope="row">WARPED</th>
+                <td><strong>20/20</strong></td>
+                <td>18/20</td>
+                <td><strong>17/20</strong></td>
+                <td>11/20</td>
+                <td>17/20</td>
+                <td>17/20</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Data Collection Time</h3>
+        <div class="results-table-wrapper">
+          <table class="results-table">
+            <caption>Total demonstration collection time (mm:ss).</caption>
+            <thead>
+              <tr>
+                <th scope="col">Method</th>
+                <th scope="col">Rotate Box</th>
+                <th scope="col">Pour Mug</th>
+                <th scope="col">Bottle from Rack</th>
+                <th scope="col">Wipe Brush</th>
+                <th scope="col">Can on Plate</th>
+                <th scope="col">Open Microwave</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Teleoperation</th>
+                <td>22:51</td>
+                <td>24:59</td>
+                <td>31:49</td>
+                <td>30:16</td>
+                <td>15:20</td>
+                <td>35:17</td>
+              </tr>
+              <tr class="warped-result">
+                <th scope="row">WARPED</th>
+                <td><strong>3:37</strong></td>
+                <td><strong>3:18</strong></td>
+                <td><strong>3:27</strong></td>
+                <td><strong>5:19</strong></td>
+                <td><strong>3:41</strong></td>
+                <td><strong>4:12</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="citation" id="bibtex">
+      <div class="container">
+        <h2>BibTeX</h2>
+        <pre><code>@inproceedings{freeman2026warped,
+  title     = {WARPED: Wrist-Aligned Rendering for Robot Policy Learning from Egocentric Human Demonstrations},
+  author    = {Freeman, Harry and Kim, Chung Hee and Wang, Jenny and Kantor, George},
+  booktitle = {Conference on Robot Learning (CoRL)},
+  year      = {2026}
+}</code></pre>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          This website is based on the
+          <a href="https://github.com/nerfies/nerfies.github.io">Nerfies template</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

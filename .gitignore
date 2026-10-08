@@ -1,0 +1,33 @@
+# Local Codex and workspace state
+.agents/
+.aws/
+.codex/
+
+# Personal notes
+notes.txt
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local environment and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Python caches from local preview tooling
+__pycache__/
+*.py[cod]
+
+# Temporary files
+.cache/
+*.tmp
+*.temp
